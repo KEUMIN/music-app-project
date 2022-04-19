@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<div id="music-list">
+    <div th:each="music,musicStat: ${musicList}">
+        <div class="music">
+            <a th:href="@{|/music/${music.no}|}">
+                <img class="music-img" th:src="@{|https:${music.poster}|}"><br>
+            </a>
+            <i class="bi bi-disc"></i>
+            <div class="text-truncate" id="music-title">[[${music.title}]]</div><br>
+            <div class="text-truncate" id="music-singer">
+                <i class="bi bi-person-fill"></i> [[${music.singer}]]
+            </div>
+        </div>
+    </div>
+</div>
+</html>

@@ -15,5 +15,5 @@ public class Music {
     @Column
     private Integer cno,idcrement;
     @Column
-    private String title,singer,album,state,poster,mkey;
+    private String title,singer,album,state,poster,mkey,comments;
 }

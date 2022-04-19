@@ -9,17 +9,31 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     <style type="text/css">
-        div#music-list{
-            display: block;
-            float: left;
+        .music-area{
+            height: 270vh;
         }
-        div.music{
-            margin-left: 10px;
-            margin-right: 10px;
-            margin-bottom: 20px;
+        #title {
+            margin-top: 50px;
+            margin-bottom: 50px;
+            position: relative;
+            left: 7.5vw;
+        }
+        div#music-list{
+            position: relative;
+            left: 7.5vw;
             display: block;
             float: left;
             text-align: center;
+        }
+        div.music{
+            width: 250px;
+            height: 400px;
+            margin-right: 10px;
+            margin-bottom: 20px;
+            padding-top: 20px;
+            float: left;
+            text-align: center;
+            border: solid black;
         }
         .music-img {
             margin-bottom: 20px;
@@ -29,8 +43,14 @@
             transform: scale(1.2);
             transition: 0.2s;
         }
-        .music-area{
-            height: 200vh;
+        #music-info {
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        #paging-area {
+            position: relative;
+            left: 30vw;
+            text-align: center;
         }
         .page-item{
             display: inline-block;
@@ -54,43 +74,52 @@
 <body>
 <th:block th:include="fragments/header::headerFragment"/>
     <div class="music-area">
-        <main class="container clear">
-            <div class="content row">
-                <div id="gallery" class="col-xs-12">
-                    <header class="heading">음악 목록</header>
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <h1 id="title">음악 목록</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
                     <div id="music-list" th:each="music,musicStat: ${musicList}">
                         <div class="music">
                             <a th:href="@{|/music/${music.no}|}">
                                 <img class="music-img" th:src="@{|https:${music.poster}|}"><br>
                             </a>
-                            <i class="bi bi-disc"></i>
-                            <div class="text-truncate" id="music-title">[[${music.title}]]</div><br>
-                            <div class="text-truncate" id="music-singer">
-                                <i class="bi bi-person-fill"></i> [[${music.singer}]]
+                            <div id="music-info">
+                                <i class="bi bi-disc"></i>
+                                <div id="music-title">
+                                    [[${music.title}]]
+                                </div><br>
+                                <i class="bi bi-person-fill"></i>
+                                <div id="music-singer">
+                                    [[${music.singer}]]
+                                </div>
                             </div>
                         </div>
                         <br>
                     </div>
                 </div>
                 <br>
-                <nav class="pagination row">
-                    <div class="col-xs-12">
+                <div class="pagination row">
+                    <div id="paging-area" class="col-xs-12">
                         <div class="page-item">
                             <a class="page-link" th:if="${endPage>5}" th:href="@{|?curPage=${startPage-5}|}" th:text="prev" />
                         </div>
-                        <ul class="pagination" th:each="pageNum: ${pageNums}">
+                        <ul class="pagination" th:each="pageNum: ${#numbers.sequence(startPage,endPage)}">
                             <li class="page-item">
                                 <a class="page-link" th:href="@{|?curPage=${pageNum}|}" th:text="${pageNum}" />
                             </li>
                         </ul>
                         <div class="page-item">
-                            <a class="page-link" th:if="${endPage <= totPages}" th:href="@{|?curPage=${endPage+1}|}" th:text="next" />
+                            <a class="page-link" th:if="${endPage < totPages}" th:href="@{|?curPage=${endPage+1}|}" th:text="next" />
                         </div>
                     </div>
-                </nav>
+                </div>
             </div>
             <div class="clear"></div>
-        </main>
+        </div>
     </div>
 <th:block th:include="fragments/footer::footerFragment"/>
 </body>
