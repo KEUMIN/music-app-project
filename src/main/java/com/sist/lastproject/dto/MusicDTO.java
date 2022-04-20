@@ -1,18 +1,12 @@
 package com.sist.lastproject.dto;
 
 import com.sist.lastproject.entity.Music;
-import lombok.Builder;
+
 import lombok.Getter;
 import lombok.Setter;
-
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-
 @Getter
 @Setter
 public class MusicDTO {
