@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,10 +19,16 @@ public class MovieController {
     @Autowired
     private MovieRepository movieRepository;
 
-    @RequestMapping("/movie")
-    public List<Movie> getMovieList(@ModelAttribute("moviePage")MoviePage moviePage) {
-        System.out.println(moviePage.getPage());
-        PageRequest pageRequest = PageRequest.of(moviePage.getPage(), 12);
+    @GetMapping("/movie")
+    public List<Movie> getMovieList() {
+        PageRequest pageRequest = PageRequest.of(0, 12);
+        Page<Movie> movies = movieRepository.findAll(pageRequest);
+        return movies.getContent();
+    }
+    @PostMapping("/movie")
+    public List<Movie> postMovieList(@RequestParam("page")Integer page) {
+        System.out.println("received page number: " +page);
+        PageRequest pageRequest = PageRequest.of(page, 12);
         Page<Movie> movies = movieRepository.findAll(pageRequest);
         movies.stream().forEach(m -> System.out.println(m.getTitle()));
         return movies.getContent();

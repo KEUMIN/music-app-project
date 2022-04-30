@@ -4,22 +4,13 @@ import com.sist.lastproject.dto.MusicDTO;
 import com.sist.lastproject.entity.Music;
 import com.sist.lastproject.repository.MusicRepository;
 import com.sist.lastproject.service.MusicService;
-import com.sist.lastproject.util.MelonBot;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import org.snu.ids.kkma.index.Keyword;
-import org.snu.ids.kkma.index.KeywordExtractor;
-import org.snu.ids.kkma.index.KeywordList;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.stream.Collectors;
 @AllArgsConstructor
 @Controller
 @RequestMapping("/music")
@@ -59,33 +50,7 @@ public class MusicController {
     @GetMapping("/add")
     @ResponseBody
     public String addComments() {
-        List<String> albumNames = musicRepository.getAlbumNames();
-        MelonBot bot1 = new MelonBot();
-        for (int i = 93; i < albumNames.size(); i++) {
-            String album = albumNames.get(i);
-            String comment = null;
-            if (musicRepository.getCommentsByNo(i+1) != null) continue;
-
-            try {
-                comment = bot1.activateBot(album);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            // init KeywordExtractor
-            KeywordExtractor ke = new KeywordExtractor();
-            // extract keywords
-            KeywordList kl = ke.extractKeyword(comment, true);
-            List<Keyword> keywords = kl.stream()
-                    .sorted(Comparator.comparing(Keyword::getCnt).reversed())
-                    .limit(20)
-                    .collect(Collectors.toList());
-            StringBuffer comments = new StringBuffer();
-            keywords.stream().forEach(k -> comments.append(k.getString() + "%" + k.getCnt() + "/"));
-
-            musicRepository.updateComments(comments.toString(), album);
-            System.out.println(comments.toString());
-        }
-        bot1.closeDriver();
+        musicService.addComments();
         return "Ok";
     }
 }

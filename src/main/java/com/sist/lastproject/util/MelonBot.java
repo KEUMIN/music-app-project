@@ -1,21 +1,11 @@
 package com.sist.lastproject.util;
 
-import ch.qos.logback.core.encoder.EchoEncoder;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.snu.ids.kkma.index.Keyword;
-import org.snu.ids.kkma.index.KeywordExtractor;
-import org.snu.ids.kkma.index.KeywordList;
-
-import java.net.URI;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class MelonBot {
 
@@ -28,7 +18,7 @@ public class MelonBot {
     private static final String ALBUM_XPATH3 = "/html/body/div/div[3]/div/div[1]/div[4]/form/div/ul/li[1]/div/div/dl/dt/a";
 
     private static final String WEB_DRIVER_ID = "webdriver.chrome.driver";
-    private static final String WEB_DRIVER_PATH = "C:/Users/mskeu/chromedriver_win32/chromedriver.exe";
+    private static final String WEB_DRIVER_PATH = "C:/Users/xxx/chromedriver_win32/chromedriver.exe";
 
     public MelonBot() {
         // WebDriver 경로 설정
